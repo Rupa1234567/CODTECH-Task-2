@@ -1,0 +1,84 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GradeTracker {
+
+    static class Grade {
+        String subject;
+        double score;
+
+        Grade(String subject, double score) {
+            this.subject = subject;
+            this.score = score;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Grade> grades = new ArrayList<>();
+        String subject;
+        double score;
+
+        // Input grades for different subjects or assignments
+        while (true) {
+            System.out.print("Enter subject (or 'done' to finish): ");
+            subject = scanner.nextLine();
+            if (subject.equalsIgnoreCase("done")) {
+                break;
+            }
+            System.out.print("Enter grade for " + subject + ": ");
+            score = scanner.nextDouble();
+            scanner.nextLine();  // consume the newline character
+
+            grades.add(new Grade(subject, score));
+        }
+
+        if (grades.size() == 0) {
+            System.out.println("No grades entered.");
+            return;
+        }
+
+        // Calculate average grade
+        double total = 0;
+        for (Grade grade : grades) {
+            total += grade.score;
+        }
+        double average = total / grades.size();
+
+        // Display overall grade
+        System.out.println("Overall Average Grade: " + average);
+        System.out.println("Letter Grade: " + getLetterGrade(average));
+        System.out.println("GPA: " + getGPA(average));
+    }
+
+    // Method to get letter grade based on average score
+    public static String getLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    // Method to get GPA based on average score
+    public static double getGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+}
